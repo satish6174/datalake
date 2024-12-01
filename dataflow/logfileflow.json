@@ -1,0 +1,81 @@
+{
+	"name": "logfileflow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText2",
+						"type": "DatasetReference"
+					},
+					"name": "dlforlog"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "logfiledataset",
+						"type": "DatasetReference"
+					},
+					"name": "logtable"
+				}
+			],
+			"transformations": [
+				{
+					"name": "selectinglogdata"
+				},
+				{
+					"name": "logdatatoarray"
+				},
+				{
+					"name": "mapcolumns"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          {2024-12-01 19:20:42 10.0.0.4 GET / - 80 - 108.70.64.202 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML} as string,",
+				"          {+like+Gecko)+Chrome/131.0.0.0+Safari/537.36+Edg/131.0.0.0 - 200 0 0 309} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     skipLines: 4) ~> dlforlog",
+				"dlforlog select(mapColumn(",
+				"          logdata = {2024-12-01 19:20:42 10.0.0.4 GET / - 80 - 108.70.64.202 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectinglogdata",
+				"selectinglogdata derive(logdata = split(logdata, \" \")) ~> logdatatoarray",
+				"logdatatoarray derive(LogDate = logdata[1],",
+				"          IPAddress = logdata[9],",
+				"          { RequestMethod} = logdata[4],",
+				"          RequestResource = logdata[5]) ~> mapcolumns",
+				"mapcolumns sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          LogDate as date,",
+				"          IPAddress as string,",
+				"          RequestMethod as string,",
+				"          RequestResource as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     staged: true,",
+				"     allowCopyCommand: true,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          LogDate,",
+				"          IPAddress,",
+				"          RequestMethod = { RequestMethod},",
+				"          RequestResource",
+				"     )) ~> logtable"
+			]
+		}
+	}
+}

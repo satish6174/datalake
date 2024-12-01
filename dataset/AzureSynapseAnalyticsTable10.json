@@ -1,0 +1,13 @@
+{
+	"name": "AzureSynapseAnalyticsTable10",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSynapseAnalytics3",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

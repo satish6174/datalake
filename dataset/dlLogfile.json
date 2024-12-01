@@ -1,0 +1,18 @@
+{
+	"name": "dlLogfile",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "centraldatalake1729",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "logs"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,17 @@
+{
+	"name": "vmconnect",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "FileServer",
+		"typeProperties": {
+			"host": "C:\\inetpub\\logs\\LogFiles\\W3SVC1",
+			"userId": "satish",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJlMWQ4NzgzMC1jMTczLTQzYmYtODkwYS04M2JiYjdhNzQ0NDgiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntimeforvm",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

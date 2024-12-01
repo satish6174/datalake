@@ -1,0 +1,38 @@
+{
+	"name": "Json3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "centraldatalake1729",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "customer"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"customerid": {
+					"type": "integer"
+				},
+				"customername": {
+					"type": "string"
+				},
+				"registered": {
+					"type": "boolean"
+				},
+				"courses": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
